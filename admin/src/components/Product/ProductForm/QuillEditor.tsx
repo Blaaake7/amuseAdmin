@@ -12,7 +12,6 @@ interface MainInfoProps {
 
 function QuillEditor({htmlProps, onChange}: MainInfoProps) {
   const quillRef = useRef()
-  const [content, setContent] = useState("")
   // quill에서 사용할 모듈
   // useMemo를 사용하여 modules가 렌더링 시 에디터가 사라지는 버그를 방지
   const modules = useMemo(() => {
@@ -31,14 +30,14 @@ function QuillEditor({htmlProps, onChange}: MainInfoProps) {
   }, [])
   return (
     <div style={{ margin: "50px" }}>
-      <button onClick={() => console.log(content)}>Value</button>
+      <button onClick={() => console.log(htmlProps)}>Value</button>
       <ReactQuill
         style={{ width: "600px", height: "600px" }}
         placeholder="Quill Content"
         theme="snow"
         // ref={quillRef}
-        value={content}
-        onChange={setContent}
+        value={htmlProps}
+        onChange={onChange}
         modules={modules}
       />
     </div>
