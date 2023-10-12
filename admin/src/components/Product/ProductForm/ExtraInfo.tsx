@@ -33,6 +33,7 @@ function ExtraInfo({ htmlProps, onChange }: ExtraInfoProps) {
     const html = draftjsToHtml(convertToRaw(draftState.getCurrentContent()));
     onChange(html);
     alert("추가 정보 글이 저장되었습니다.");
+    console.log(html);
   };
 
   const uploadImageCallBack = (file: File) => {

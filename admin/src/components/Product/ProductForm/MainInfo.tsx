@@ -29,13 +29,35 @@ function MainInfo({htmlProps, onChange}: MainInfoProps) {
     setDraftState(mainInfoState);
   }
 
+  useEffect(() => {
+    // htmlProps가 변경될 때만 업데이트
+    const contentBlock = convertFromHTML(htmlProps);
+    const contentState = ContentState.createFromBlockArray(
+      contentBlock.contentBlocks
+    );
+    const initialEditorState = EditorState.createWithContent(contentState);
+    setMainInfoState(initialEditorState);
+    setDraftState(initialEditorState);
+  }, [htmlProps]);
 
   const saveContent = () => {
-    setMainInfoState(draftState);
-    const html = draftjsToHtml(convertToRaw(draftState.getCurrentContent()));
-    onChange(html);
-    console.log(typeof(html));
-    alert('상품 소개 글이 저장되었습니다.');
+    // const html = draftjsToHtml(convertToRaw(draftState.getCurrentContent()));
+    // onChange(html);
+    // console.log(html);
+    // alert('상품 소개 글이 저장되었습니다.');
+
+        // EditorState 복제
+        const previousEditorState = EditorState.createWithContent(
+          draftState.getCurrentContent()
+        );
+    
+        // EditorState를 이전 상태로 복원
+        setMainInfoState(previousEditorState);
+    
+        const html = draftjsToHtml(convertToRaw(draftState.getCurrentContent()));
+        console.log(html);
+        onChange(html);
+        alert('상품 소개 글이 저장되었습니다.');
   }
 
 
